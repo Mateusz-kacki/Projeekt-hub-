@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Interaktywny plan — pełna wersja</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<button id="settingsBtn" title="Pasek narzędzi">⚙️</button>
+
+<div id="toolbar">
+  <input id="fileInput" type="file" accept="image/*" />
+  <input id="excelInput" type="file" accept=".xlsx,.xls" />
+  <button id="pngBtn">PNG</button>
+  <button id="drawAreaBtn">Rysuj obszar</button>
+  <label>Wiersze: <input id="rowsInput" type="number" value="4" min="1" style="width:56px"></label>
+  <label>Kolumny: <input id="colsInput" type="number" value="8" min="2" style="width:56px"></label>
+  <button id="addTextBtn">Dodaj pole tekstowe</button>
+  <button id="copyGridBtn">Kopiuj obszar</button>
+  <button id="clearBtn">Usuń wszystko</button>
+  <label style="margin-left:6px;"><input id="voiceToggle" type="checkbox"> Czytaj na głos</label>
+  <button id="testVoiceBtn" style="background:#4aa3ff;color:white;border:none;border-radius:6px;padding:6px 10px;cursor:pointer;">🗣️ Testuj głos</button>
+</div>
+<div id="reminderCountdown"></div>
+<div id="canvasWrap" tabindex="0"></div>
+<div id="customAlert"><div id="customAlertMessage"></div><button id="customAlertOk">OK</button></div>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
