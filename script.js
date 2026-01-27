@@ -831,19 +831,3 @@ function loadStateFromFirebase() {
     })
     .catch(err => console.error("Firebase load error:", err));
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
