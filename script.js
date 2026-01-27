@@ -714,6 +714,7 @@ if(storedExcel){
     excelData = JSON.parse(storedExcel); 
     buildReminders(); 
     updateFromExcel(); 
+}
 
 /* expose some functions for debugging */
 window.updateFromExcel = updateFromExcel;
@@ -831,3 +832,4 @@ function loadStateFromFirebase() {
     })
     .catch(err => console.error("Firebase load error:", err));
 }
+
