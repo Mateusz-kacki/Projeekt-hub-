@@ -299,6 +299,7 @@ function saveState(){
     state.texts.push({ left: t.style.left || '0%', top: t.style.top || '0%', width: t.style.width || '10%', height: t.style.height || '4%', value: t.value || '', fontSize: t.style.fontSize || '15px' });
   });
   localStorage.setItem('planState', JSON.stringify(state));
+  saveStateToFirebase(state, excelData, rowEntries);
   saveRowEntries();
   if(excelData) localStorage.setItem('excelData', JSON.stringify(excelData));
 }
@@ -702,6 +703,8 @@ pngSaveBtn.addEventListener('click', () => {
 /* ================= INIT ================= */
 loadRowEntries();
 loadState();
+loadStateFromFirebase();
+
 const storedExcel = localStorage.getItem('excelData');
 if(storedExcel){ excelData = JSON.parse(storedExcel); buildReminders(); updateFromExcel(); }
 
@@ -709,3 +712,50 @@ if(storedExcel){ excelData = JSON.parse(storedExcel); buildReminders(); updateFr
 window.updateFromExcel = updateFromExcel;
 window.buildReminders = buildReminders;
 window.saveState = saveState;
+
+
+const FIREBASE_DOC = "shared/plan";
+
+function saveStateToFirebase(state, excelData, rowEntries) {
+  if (typeof db === "undefined") return;
+
+  db.doc(FIREBASE_DOC).set({
+    state,
+    excelData: excelData || null,
+    rowEntries: rowEntries || {},
+    updatedAt: Date.now()
+  }).then(() => {
+    console.log("🔥 Zapisano do Firebase");
+  }).catch(err => console.error("Firebase save error:", err));
+}
+
+function loadStateFromFirebase() {
+  if (typeof db === "undefined") return;
+
+  db.doc(FIREBASE_DOC).get()
+    .then(doc => {
+      if (!doc.exists) return;
+
+      const data = doc.data();
+      console.log("🔥 Wczytano z Firebase");
+
+      if (data.rowEntries) {
+        rowEntries = data.rowEntries;
+        saveRowEntries();
+      }
+
+      if (data.excelData) {
+        excelData = data.excelData;
+        localStorage.setItem('excelData', JSON.stringify(excelData));
+        buildReminders();
+        updateFromExcel();
+      }
+
+      if (data.state) {
+        localStorage.setItem('planState', JSON.stringify(data.state));
+        loadState();
+      }
+    })
+    .catch(err => console.error("Firebase load error:", err));
+}
+
