@@ -5,8 +5,29 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Interaktywny plan — pełna wersja</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyDqsv-mWelRE433VdOQ6a53XX-Sjwua2i4",
+  authDomain: "hub-lublin.firebaseapp.com",
+  projectId: "hub-lublin",
+  storageBucket: "hub-lublin.firebasestorage.app",
+  messagingSenderId: "764823272776",
+  appId: "1:764823272776:web:61ee5b76f7bbd82744077d",
+  measurementId: "G-K0LC75EKV7"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+</script>
+
 </head>
 <body>
+
 <button id="settingsBtn" title="Pasek narzędzi">⚙️</button>
 
 <div id="toolbar">
@@ -22,11 +43,20 @@
   <label style="margin-left:6px;"><input id="voiceToggle" type="checkbox"> Czytaj na głos</label>
   <button id="testVoiceBtn" style="background:#4aa3ff;color:white;border:none;border-radius:6px;padding:6px 10px;cursor:pointer;">🗣️ Testuj głos</button>
 </div>
+
 <div id="reminderCountdown"></div>
 <div id="canvasWrap" tabindex="0"></div>
-<div id="customAlert"><div id="customAlertMessage"></div><button id="customAlertOk">OK</button></div>
-<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-<script src="script.js"></script>
-</body>
 
+<div id="customAlert">
+  <div id="customAlertMessage"></div>
+  <button id="customAlertOk">OK</button>
+</div>
+
+<!-- Excel -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<!-- Twój główny JS -->
+<script src="script.js"></script>
+
+</body>
 </html>
