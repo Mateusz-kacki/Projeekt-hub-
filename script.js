@@ -1,5 +1,5 @@
 /* ================= STATE & ELEMENTS ================= */
-const FIREBASE_DOC = "shared/plan";
+var FIREBASE_DOC = "shared/plan";
 const settingsBtn = document.getElementById('settingsBtn');
 const toolbar = document.getElementById('toolbar');
 const fileInput = document.getElementById('fileInput');
@@ -757,5 +757,6 @@ function loadStateFromFirebase() {
     })
     .catch(err => console.error("Firebase load error:", err));
 }
+
 
 
