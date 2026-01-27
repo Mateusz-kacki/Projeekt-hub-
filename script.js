@@ -800,7 +800,8 @@ function loadStateFromFirebase() {
     localStorage.setItem('excelData', JSON.stringify(excelData));
     buildReminders();
     updateFromExcel();
-  } catch(e) {
+  } 
+  catch(e) {
     console.error("Błąd parsowania excelData z Firebase:", e);
   }
 }
@@ -839,6 +840,7 @@ loadStateFromFirebase();
 window.updateFromExcel = updateFromExcel;
 window.buildReminders = buildReminders;
 window.saveState = saveState;
+
 
 
 
