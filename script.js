@@ -702,12 +702,18 @@ pngSaveBtn.addEventListener('click', () => {
   pngModal.style.display = 'none';
 });
 /* ================= INIT ================= */
+/* ================= INIT ================= */
+var FIREBASE_DOC = "shared/plan"; // <-- dodaj to jako pierwszą linię w tej sekcji
+
 loadRowEntries();
 loadState();
 loadStateFromFirebase();
 
 const storedExcel = localStorage.getItem('excelData');
-if(storedExcel){ excelData = JSON.parse(storedExcel); buildReminders(); updateFromExcel(); }
+if(storedExcel){ 
+    excelData = JSON.parse(storedExcel); 
+    buildReminders(); 
+    updateFromExcel(); 
 
 /* expose some functions for debugging */
 window.updateFromExcel = updateFromExcel;
@@ -757,6 +763,7 @@ function loadStateFromFirebase() {
     })
     .catch(err => console.error("Firebase load error:", err));
 }
+
 
 
 
