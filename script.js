@@ -832,14 +832,6 @@ function loadStateFromFirebase() {
     .catch(err => console.error("Firebase load error:", err));
 }
 
-loadRowEntries();
-loadState();
-loadStateFromFirebase();
-
-/* expose some functions for debugging */
-window.updateFromExcel = updateFromExcel;
-window.buildReminders = buildReminders;
-window.saveState = saveState;
 
 
 
