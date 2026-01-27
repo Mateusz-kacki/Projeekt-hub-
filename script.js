@@ -724,7 +724,10 @@ window.saveState = saveState;
 function saveStateToFirebase(state, excelData, rowEntries) {
   if (typeof db === "undefined") return;
 
-  // Zamieniamy zagnieżdżone tablice/obiekty na JSON string, żeby Firestore nie wyrzucał błędu
+ 
+function saveStateToFirebase(state, excelData, rowEntries) {
+  if (typeof db === "undefined") return;
+
   const firebaseState = {
     bg: state.bg,
     grids: state.grids.map(g => ({
@@ -743,6 +746,7 @@ function saveStateToFirebase(state, excelData, rowEntries) {
   .then(() => console.log("🔥 Zapisano do Firebase"))
   .catch(err => console.error("Firebase save error:", err));
 }
+
 function loadStateFromFirebase() {
   if (typeof db === "undefined") return;
 
@@ -765,8 +769,8 @@ function loadStateFromFirebase() {
         updateFromExcel();
       }
 
-    f (data.state) {
-  // Odwracamy JSON string dla cells na obiekty
+if (data.state) {
+  // Przy wczytywaniu odwracamy JSON.parse dla komórek będących stringiem
   const loadedState = {
     ...data.state,
     grids: data.state.grids.map(g => ({
@@ -780,10 +784,12 @@ function loadStateFromFirebase() {
   localStorage.setItem('planState', JSON.stringify(loadedState));
   loadState();
 }
+
       }
     })
     .catch(err => console.error("Firebase load error:", err));
 }
+
 
 
 
