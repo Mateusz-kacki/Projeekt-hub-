@@ -798,8 +798,7 @@ function loadStateFromFirebase() {
         try {
           excelData = JSON.parse(data.excelData); // odczytujemy tablicę tablic
           localStorage.setItem('excelData', JSON.stringify(excelData));
-        }
-          buildReminders();
+        } buildReminders();
           updateFromExcel();
         } catch(e) {
           console.error("Błąd parsowania excelData z Firebase:", e);
@@ -830,6 +829,7 @@ function loadStateFromFirebase() {
     })
     .catch(err => console.error("Firebase load error:", err));
 }
+
 
 
 
