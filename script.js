@@ -795,16 +795,16 @@ function loadStateFromFirebase() {
 
       // excelData
       if (data.excelData) {
-        try {
-          excelData = JSON.parse(data.excelData); // odczytujemy tablicę tablic
-          localStorage.setItem('excelData', JSON.stringify(excelData));
-        }
-         buildReminders();
-          updateFromExcel();
-        } catch(e) {
-          console.error("Błąd parsowania excelData z Firebase:", e);
-        }
-      }
+  try {
+    excelData = JSON.parse(data.excelData); // odczytujemy tablicę tablic
+    localStorage.setItem('excelData', JSON.stringify(excelData));
+    buildReminders();
+    updateFromExcel();
+  } catch(e) {
+    console.error("Błąd parsowania excelData z Firebase:", e);
+  }
+}
+
 
       // state
       if (data.state) {
@@ -830,6 +830,7 @@ function loadStateFromFirebase() {
     })
     .catch(err => console.error("Firebase load error:", err));
 }
+
 
 
 
