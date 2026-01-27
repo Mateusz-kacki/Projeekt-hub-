@@ -724,10 +724,7 @@ window.saveState = saveState;
 function saveStateToFirebase(state, excelData, rowEntries) {
   if (typeof db === "undefined") return;
 
- 
-function saveStateToFirebase(state, excelData, rowEntries) {
-  if (typeof db === "undefined") return;
-
+  // Zamieniamy zagnieżdżone obiekty w cells na string
   const firebaseState = {
     bg: state.bg,
     grids: state.grids.map(g => ({
@@ -739,7 +736,8 @@ function saveStateToFirebase(state, excelData, rowEntries) {
 
   db.doc(FIREBASE_DOC).set({
     state: firebaseState,
-    excelData: excelData || null,
+    // zamieniamy excelData na JSON string
+    excelData: excelData ? JSON.stringify(excelData) : null,
     rowEntries: rowEntries || {},
     updatedAt: Date.now()
   })
@@ -768,9 +766,7 @@ function loadStateFromFirebase() {
         buildReminders();
         updateFromExcel();
       }
-
 if (data.state) {
-  // Przy wczytywaniu odwracamy JSON.parse dla komórek będących stringiem
   const loadedState = {
     ...data.state,
     grids: data.state.grids.map(g => ({
@@ -785,10 +781,17 @@ if (data.state) {
   loadState();
 }
 
-      }
-    })
-    .catch(err => console.error("Firebase load error:", err));
+if (data.excelData) {
+  try {
+    excelData = JSON.parse(data.excelData); // odwracamy string na tablicę tablic
+    localStorage.setItem('excelData', JSON.stringify(excelData));
+    buildReminders();
+    updateFromExcel();
+  } catch(e) {
+    console.error("Błąd parsowania excelData z Firebase:", e);
+  }
 }
+
 
 
 
