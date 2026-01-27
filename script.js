@@ -724,16 +724,25 @@ window.saveState = saveState;
 function saveStateToFirebase(state, excelData, rowEntries) {
   if (typeof db === "undefined") return;
 
+  // Zamieniamy zagnieżdżone tablice/obiekty na JSON string, żeby Firestore nie wyrzucał błędu
+  const firebaseState = {
+    bg: state.bg,
+    grids: state.grids.map(g => ({
+      ...g,
+      cells: g.cells.map(c => typeof c === 'object' ? JSON.stringify(c) : c)
+    })),
+    texts: state.texts
+  };
+
   db.doc(FIREBASE_DOC).set({
-    state,
+    state: firebaseState,
     excelData: excelData || null,
     rowEntries: rowEntries || {},
     updatedAt: Date.now()
-  }).then(() => {
-    console.log("🔥 Zapisano do Firebase");
-  }).catch(err => console.error("Firebase save error:", err));
+  })
+  .then(() => console.log("🔥 Zapisano do Firebase"))
+  .catch(err => console.error("Firebase save error:", err));
 }
-
 function loadStateFromFirebase() {
   if (typeof db === "undefined") return;
 
@@ -756,13 +765,26 @@ function loadStateFromFirebase() {
         updateFromExcel();
       }
 
-      if (data.state) {
-        localStorage.setItem('planState', JSON.stringify(data.state));
-        loadState();
+    f (data.state) {
+  // Odwracamy JSON string dla cells na obiekty
+  const loadedState = {
+    ...data.state,
+    grids: data.state.grids.map(g => ({
+      ...g,
+      cells: g.cells.map(c => {
+        try { return JSON.parse(c); } 
+        catch(e) { return c; }
+      })
+    }))
+  };
+  localStorage.setItem('planState', JSON.stringify(loadedState));
+  loadState();
+}
       }
     })
     .catch(err => console.error("Firebase load error:", err));
 }
+
 
 
 
