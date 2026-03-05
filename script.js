@@ -698,7 +698,7 @@ pngCloseBtn.addEventListener('click', () => {
 });
 
 pngSaveBtn.addEventListener('click', () => {
-  // Opcjonalnie: dodatkowa logika po zapisaniu, np. alert('Zapisano!');
+  
   pngModal.style.display = 'none';
 });
 /* ================= INIT ================= */
@@ -832,4 +832,5 @@ function loadStateFromFirebase() {
     })
     .catch(err => console.error("Firebase load error:", err));
 }
+
 
