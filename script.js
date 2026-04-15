@@ -119,6 +119,9 @@ canvas.addEventListener('mousedown', e=>{
   if(mode === 'text'){
     const t = document.createElement('textarea');
     t.className = 'textBox';
+    t.style.position = 'absolute';
+t.style.cursor = 'text';
+t.style.zIndex = 999;
     const rect = canvas.getBoundingClientRect();
     const leftPct = ((p.x) / rect.width) * 100;
     const topPct  = ((p.y) / rect.height) * 100;
@@ -146,7 +149,7 @@ canvas.addEventListener('mousemove', e=>{
     drawRect.style.left = (w < 0 ? p.x : startX) + 'px';
     drawRect.style.top  = (h < 0 ? p.y : startY) + 'px';
   }
-  if(dragEl){
+  if(dragEl && document.activeElement.tagName !== 'TEXTAREA'){
     const p2 = clientPos(e);
     const rect = canvas.getBoundingClientRect();
     const leftPct = ((p2.x - dragDx) / rect.width) * 100;
@@ -193,6 +196,7 @@ function makeDraggable(el){
   el.addEventListener('mousedown', function(ev){
     if(ev.button !== 0) return;
    if(ev.target && ev.target.classList.contains('cellText')) return;
+    if(ev.target.tagName === 'TEXTAREA') return;
 
     
     dragEl = el;
@@ -363,7 +367,7 @@ function loadState(){
       box.style.height = (t.height && t.height.includes('px'))? pxToPct(t.height,'y'): (t.height|| '6%');
       box.value = t.value || '';
       box.style.fontSize = t.fontSize || '15px';
-      box.addEventListener('mousedown', ev=> ev.stopPropagation());
+     
       box.addEventListener('input', saveState);
       box.addEventListener('contextmenu', ev=>{ ev.preventDefault(); if(confirm('Usunąć to pole tekstowe?')){ box.remove(); saveState(); } });
       makeDraggable(box);
