@@ -170,6 +170,7 @@ canvas.addEventListener('mouseup', e=>{
     }
     saveState();
     mode = '';
+    return;
   }
   if(dragEl){
     saveState();
