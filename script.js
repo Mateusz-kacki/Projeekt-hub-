@@ -126,7 +126,9 @@ canvas.addEventListener('mousedown', e=>{
     t.style.top  = topPct + '%';
     t.value = '';
     t.placeholder = 'Wpisz...';
-    t.addEventListener('mousedown', ev => ev.stopPropagation());
+
+    
+  
     t.addEventListener('input', saveState);
     t.addEventListener('contextmenu', ev=>{ ev.preventDefault(); if(confirm('Usunąć to pole tekstowe?')){ t.remove(); saveState(); } });
     canvas.appendChild(t);
@@ -190,7 +192,9 @@ canvas.addEventListener('click', e=>{
 function makeDraggable(el){
   el.addEventListener('mousedown', function(ev){
     if(ev.button !== 0) return;
-    if(ev.target && (ev.target.classList.contains('cellText') || ev.target.classList.contains('textBox'))) return;
+   if(ev.target && ev.target.classList.contains('cellText')) return;
+
+    
     dragEl = el;
     const rect = canvas.getBoundingClientRect();
     const ex = ev.clientX - rect.left;
@@ -199,7 +203,7 @@ function makeDraggable(el){
     const topPx  = (parseFloat(el.style.top||0)  / 100) * rect.height;
     dragDx = ex - leftPx;
     dragDy = ey - topPx;
-    ev.stopPropagation(); ev.preventDefault();
+    ev.preventDefault();
   });
 }
 
